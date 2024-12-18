@@ -1,0 +1,31 @@
+﻿@page "/"
+@inject IDialogService DialogService
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<FluentButton @onclick="@OpenDialogAsync" Appearance="Appearance.Accent">
+    Open Dialog
+</FluentButton>
+
+@code {
+
+
+    private async Task OpenDialogAsync()
+    {
+
+        DialogParameters parameters = new()
+            {
+                Title = $"Simple Dialog",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = false,
+                SecondaryAction = "No",
+                Modal = true
+            };
+
+        IDialogReference dialog = await DialogService.ShowDialogAsync<SimpleDialog>(parameters);
+        DialogResult? result = await dialog.Result;
+
+    }
+}

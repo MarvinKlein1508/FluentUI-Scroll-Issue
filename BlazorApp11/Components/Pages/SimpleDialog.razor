@@ -1,0 +1,57 @@
+﻿@implements IDialogContentComponent
+
+<FluentTabs>
+    <FluentTab Label="Sample Table">
+        <div class="table-responsive">
+            <table class="table mb-0 table-lg align-middle">
+                <thead>
+                    <tr>
+                        <th>Column1</th>
+                        <th>Column2</th>
+                        <th>Column3</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <Virtualize Items="Data" Context="row">
+                        <tr>
+                            <td>@row.Count1</td>
+                            <td>@row.Count2</td>
+                            <td>@row.Count3</td>
+                        </tr>
+                    </Virtualize>
+                </tbody>
+            </table>
+        </div>
+    </FluentTab>
+</FluentTabs>
+
+
+@code {
+    private List<MyData> Data { get; set; }
+
+    public SimpleDialog()
+    {
+        Data = new();
+
+        for (int i = 0; i < 150; i++)
+        {
+            Data.Add(new MyData
+            {
+                Count1 = i,
+                Count2 = i + 1,
+                Count3 = i + 2,
+            });
+        }
+    }
+
+    [CascadingParameter]
+    public FluentDialog? Dialog { get; set; }
+
+    
+    private class MyData
+    {
+        public required int Count1 { get; init; }
+        public required int Count2 { get; init; }
+        public required int Count3 { get; init; }
+    }
+}
